@@ -27,5 +27,18 @@ let fighter = new Fighter('Elf', 200, 100);
 let improvedFighter = new ImprovedFighter('Gnom', 300, 100);
 
 function fight(fighter, improvedFighter, ...point){
+
+	for (let i = 0; i < points.length; i++) {
+		fighter.hit(improvedFighter, points[i]);
+		improvedFighter.doubleHit(fighter, points[i]);
+		if (fighter.health <= 0) {
+            console.log("The winner is " + improvedFighter);
+			break;
+		} else if (improvedFighter.health <= 0) {
+            console.log("The winner is " + fighter);
+			break;
+		}
+	}
     
 }
+
