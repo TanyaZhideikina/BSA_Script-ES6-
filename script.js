@@ -26,8 +26,7 @@ class ImprovedFighter extends Fighter{
 let fighter = new Fighter('Elf', 200, 100);
 let improvedFighter = new ImprovedFighter('Gnom', 300, 100);
 
-function fight(fighter, improvedFighter, ...point){
-
+var fight = (fighter, improvedFighter, ...points) => {
 	for (let i = 0; i < points.length; i++) {
 		fighter.hit(improvedFighter, points[i]);
 		improvedFighter.doubleHit(fighter, points[i]);
