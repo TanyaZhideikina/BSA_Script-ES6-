@@ -11,7 +11,7 @@ class Fighter{
     } 
     
     hit(enemy, point = 1){
-        damage = point * this.power;
+        var damage = point * this.power;
         enemy.setDamage(damage);
     }
 }
@@ -23,15 +23,23 @@ class ImprovedFighter extends Fighter{
     
 }
 
+class WeakFighter extends ImprovedFighter{
+    protect(point){
+         super.hit(point/2);
+    }
+} 
+
+
 let fighter = new Fighter('Elf', 200, 100);
 let improvedFighter = new ImprovedFighter('Gnom', 300, 100);
+let WeakFighter = new WeakFighter('Magitian', 300, 100);
 
 var fight = (fighter, improvedFighter, ...points) => {
 	for (let i = 0; i < points.length; i++) {
 		fighter.hit(improvedFighter, points[i]);
 		improvedFighter.doubleHit(fighter, points[i]);
 		if (fighter.health <= 0) {
-            console.log("The winner is " + improvedFighter);
+            console.log("The winner is " + improvedFighter.name);
 			break;
 		} else if (improvedFighter.health <= 0) {
             console.log("The winner is " + fighter);
@@ -40,4 +48,3 @@ var fight = (fighter, improvedFighter, ...points) => {
 	}
     
 }
-
