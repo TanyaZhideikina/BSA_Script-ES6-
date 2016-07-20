@@ -7,7 +7,7 @@ class Fighter{
     
     setDamage(damage = 10){
         this.health = this.health - damage;
-        console.log(`Health: ${this.health}.` );
+        console.log(`${this.name}'s health: ${this.health}.` );
     } 
     
     hit(enemy, point = 1){
@@ -24,27 +24,38 @@ class ImprovedFighter extends Fighter{
 }
 
 class WeakFighter extends ImprovedFighter{
-    protect(point){
-         super.hit(point/2);
+    protect(enemy, point){
+         super.hit(enemy ,point/2);
     }
 } 
 
 
-let fighter = new Fighter('Elf', 200, 100);
-let improvedFighter = new ImprovedFighter('Gnom', 300, 100);
-let weakFighter = new WeakFighter('Magician', 300, 100);
+let fighter = new Fighter('Elf', 2, 1000);
+let improvedFighter = new ImprovedFighter('Gnom', 3, 1000);
+let weakFighter = new WeakFighter('Magitian', 3, 1000);
 
-var fight = (fighter, improvedFighter, weakFighter) => {
-	for (let i = 0; i < points.length; i++) {
-		fighter.hit(improvedFighter, points[i]);
-		improvedFighter.doubleHit(fighter, points[i]);
-		if (fighter.health <= 0) {
+
+function fight(fighter, improvedFighter, weakFighter){
+	let point = 10;
+    
+    do{
+        
+		fighter.hit(improvedFighter, point);
+		improvedFighter.doubleHit(weakFighter, point);
+        weakFighter.protect(fighter, point);
+        
+        if (fighter.health <= 0 && improvedFighter.health <= 0 && weakFighter.health > 0) {
+            console.log("The winner is " + weakFighter.name);
+			break;
+		} else if (fighter.health <= 0 && weakFighter.health <= 0 && improvedFighter.health > 0) {
             console.log("The winner is " + improvedFighter.name);
 			break;
-		} else if (improvedFighter.health <= 0) {
+		} else if (weakFighter.health <= 0 && improvedFighter.health <= 0 && fighter.health > 0) {
             console.log("The winner is " + fighter.name);
 			break;
 		}
-	}
-    
+	   }
+    while(fighter.health>=0 || improvedFighter.health>=0 || weakFighter.health>=0) 
 }
+
+fight(fighter, improvedFighter, weakFighter);
